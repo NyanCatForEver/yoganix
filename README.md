@@ -18,12 +18,11 @@ The Yoga Tablet 2 830L is very similar to the 830F, 1050F/L, 1380F/L, so this co
 - Accelerometer (LSM303DA)
 - Ambient light sensor (AL3320A)
 - Built-in speakers and microphone (WM5102) (requires recompiling the kernel)
-- Battery charge percentage
+- Battery charge status
 - Suspend and wake
 
 ### Non-working
 - Front and rear cameras
-- Battery charge status (does not seem to detect whether it is plugged in)
 
 ### Untested
 - USB OTG support

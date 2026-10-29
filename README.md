@@ -36,7 +36,7 @@ The Yoga Tablet 2 830L is very similar to the 830F, 1050F/L, 1380F/L, so this co
 ### Initial setup
 > [!NOTE]
 > You might want to first create a backup of the ESP partition in case you want to return to Android, or to dual-boot.  
-I also recommend backing up the factory partition. It won't be wiped, but it will be modified as it's used as the XBOOTLDR partition for systemd-boot.
+> I also recommend backing up the factory partition. It won't be wiped, but it will be modified as it's used as the XBOOTLDR partition for systemd-boot.
 
 - Put your SSH public key in [services.nix](services.nix), and configure Wi-Fi networks if needed (you can also do this graphically from GDM/GNOME)
 - Create a new ESP of the same size containing the UKI:
@@ -100,3 +100,19 @@ You should also be able to access it using yoganix.local as Avahi is enabled.
 nix shell nixpkgs#nixos-rebuild-ng -c nixos-rebuild switch --install-bootloader --flake .#yoganix --target-host root@192.168.XXX.XXX
 ```
 This will rebuild the initramfs with microcode updates enabled, and setup systemd-boot as a bootloader instead of the initial UKI.
+
+### Dual-boot setup
+systemd-boot will can chainload the Android bootloader: 
+copy ``EFI/Intel/efilinux.efi`` from the original ESP to ``/boot/EFI/Intel/efilinux.efi``
+> [!NOTE]
+> You can also find efilinux.efi in some OTA packages.
+
+systemd-boot does not detect the power button, so you can't boot into anything from its menu.  
+However, you can tell it to boot into a specific entry using bootctl, or with systemctl reboot:
+```sh
+# Boot into Android at the next boot
+sudo bootctl set-oneshot android.conf
+
+# Immediately reboot into Android
+sudo systemctl reboot --boot-loader-entry=android.conf
+```

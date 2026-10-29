@@ -16,4 +16,8 @@
       # Put your SSH public keys here.
     ];
   };
+
+  users.users.root.openssh.authorizedKeys.keys = [
+    # Put your SSH public keys here. You will need this for the initial setup.
+  ];
 }

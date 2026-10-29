@@ -23,33 +23,21 @@
   ];
 
   # External SD cards do not work without SDHCI_QUIRK2_NO_1_8_V for some reason
-  # Also, we need to avoid overriding the other quirks set by the kernel
+  # Anyways, we must not override the other quirks set by the kernel
   # (SDHCI_QUIRK2_CARD_ON_NEEDS_BUS_ON, SDHCI_QUIRK2_PRESET_VALUE_BROKEN, SDHCI_QUIRK2_STOP_WITH_TC),
   # otherwise the SD card will be extremely unstable and cause huge system-wide freezes while reading/writing
-  # (and in some cases, filesystem corruption)
+  # (and even in some cases filesystem corruption)
   #
   # https://github.com/torvalds/linux/blob/c03c1a14507dfaf8b856c2608f9ac216021fc222/drivers/mmc/host/sdhci-pci-core.c#L1276
   boot.extraModprobeConfig = ''
     options sdhci debug_quirks2=0x11C
   '';
 
-  boot.initrd = {
-    # Needed to be able to mount the rootfs on the external SD card
-    availableKernelModules = [
-      "mmc_block"
-      "sdhci_acpi"
-      "ext4"
-    ];
-
-    # Significantly reduces the size of the initrd
-    includeDefaultModules = false;
-    systemd.package = pkgs.systemdMinimal.override {
-      withQrencode = true;
-      withVConsole = true;
-    };
-    services.lvm.enable = false;
-    services.bcache.enable = false;
-  };
+  # Needed to be able to mount the rootfs on the external SD card
+  boot.initrd.availableKernelModules = [
+   "mmc_block"
+   "sdhci_acpi"
+  ];
 
   zramSwap.enable = true;
   systemd.oomd = {

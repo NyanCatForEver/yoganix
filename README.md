@@ -103,7 +103,7 @@ nix shell nixpkgs#nixos-rebuild-ng -c nixos-rebuild switch --install-bootloader 
 This will rebuild the initramfs with microcode updates enabled, and setup systemd-boot as a bootloader instead of the initial UKI.
 
 ### Dual-boot setup
-systemd-boot will can chainload the Android bootloader: 
+systemd-boot can chainload the Android bootloader: 
 copy ``EFI/Intel/efilinux.efi`` from the original ESP to ``/boot/EFI/Intel/efilinux.efi``
 > [!NOTE]
 > You can also find efilinux.efi in some OTA packages.

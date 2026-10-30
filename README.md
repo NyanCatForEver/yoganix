@@ -73,7 +73,7 @@ $ udisksctl loop-delete -b /dev/loopX
 > This will wipe the target partition. Make sure to specify the correct target.
 
 ```sh
-sudo dd bs=32M conv=fsync status=progress if="$(find $(nix build .#initialRootfs --print-out-paths) -name '*.img')" of=/dev/sdc
+sudo e2image -ra -p "$(find $(nix build .#initialRootfs --print-out-paths) -name '*.img')" /dev/sdX
 ```
 
 ### Flashing

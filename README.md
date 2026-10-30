@@ -25,6 +25,7 @@ The Yoga Tablet 2 830L is very similar to the 830F, 1050F/L, 1380F/L, so this co
 
 ### Untested
 - USB OTG support
+- Headphone jack (likely working)
 - LTE modem (likely unsupported)
 
 ## Setup

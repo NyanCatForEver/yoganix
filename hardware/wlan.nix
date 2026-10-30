@@ -17,8 +17,10 @@ let
   macAddressPath = "/config/wifi/mac.txt";
 
   nvramPath = "brcm/brcmfmac43241b4-sdio.Intel Corp.-VALLEYVIEW C0 PLATFORM.txt";
-  originalNvram = "${pkgs.linux-firmware}/lib/firmware/${nvramPath}";
-
+  originalNvram = pkgs.fetchurl {
+    url = "https://gitlab.com/kernel-firmware/linux-firmware/-/raw/20261019/${lib.strings.escapeURL nvramPath}";
+    hash = "sha256-0kou4lhvIKkTpepMaaXv1qq7CsGxNbg3dUMGIkDu1u0=";
+  };
   dynamicNvramPath = "/run/brcmfmac-nvram.txt";
   setupNvramScript = pkgs.writeShellApplication {
     name = "setup-brcmfmac-nvram";

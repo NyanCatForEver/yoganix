@@ -26,4 +26,13 @@
     ncdu
     nixd
   ];
+
+  nixpkgs.overlays = [
+    (_: prev: {
+      mbrola-voices = prev.mbrola-voices.override {
+        # only ship with one voice per language
+        languages = [ "*1" ];
+      };
+    })
+  ];
 }
